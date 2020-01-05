@@ -1,0 +1,10 @@
+[Unit]                        
+Description=VNC socket
+
+[Socket]
+ListenStream=590%i
+Accept=false
+
+[Install]
+WantedBy=default.target
+

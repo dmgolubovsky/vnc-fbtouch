@@ -1,0 +1,7 @@
+[app] (Transient=yes)
+  [Position]	(WINCENTER)	{50% 50%}
+[end]
+[app] (Transient=no)
+  [Maximized]	{yes}
+[end]
+

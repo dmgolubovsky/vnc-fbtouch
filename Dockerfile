@@ -27,10 +27,21 @@ run apt-fast install -y mesa-utils
 run env DEBIAN_FRONTEND=noninteractive apt-fast install -y xinit alsa-utils locales
 run env DEBIAN_FRONTEND=noninteractive apt-fast install -y fluxbox
 
+# Install docker client only
+
+env docker_url=https://download.docker.com/linux/static/stable/x86_64
+env docker_version=18.03.1-ce
+
+run env DEBIAN_FRONTEND=noninteractive apt-fast install -y curl
+
+run curl -fsSL $docker_url/docker-$docker_version.tgz | \
+    tar zxvf - --strip 1 -C /usr/bin docker/docker
+
 add xvnc@.service /lib/systemd/system
 add xvnc@.socket /lib/systemd/system
 add fbcfg /fbcfg
 add fbstyle /fbstyle
+add usrbin /usr/bin
 run systemctl enable xvnc@0.socket
 run locale-gen en_US.UTF-8
 

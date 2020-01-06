@@ -1,0 +1,15 @@
+#! /bin/sh
+
+# Run docker with these arguments to allow access to the X display and other resources.
+# This runs applications in sibling containers displaying them on the same screen.
+
+docker run --rm \
+	--net=host \
+	-e "DISPLAY=$DISPLAY" \
+	-e "TZ=$TZ" \
+	--device /dev/snd \
+	--device /dev/dri \
+	--mount source=vncs_home,target=/root \
+	--volume=/etc/timezone:/etc/timezone:ro \
+	"$@"
+

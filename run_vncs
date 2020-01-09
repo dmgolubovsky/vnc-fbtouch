@@ -1,0 +1,26 @@
+#! /bin/sh
+
+# A script to run systemd in the vnc-fbtouch image.
+# Export DOCKER_HOST=ssh://whatever to run remotely.
+# Typical usage ./run_vncs /sbin/init.
+
+docker run  --rm --tmpfs /run --tmpfs /run/lock --tmpfs /tmp \
+       -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
+       -e DISPLAY \
+       -h vnc-fbtouch \
+       --name vnc-fbtouch \
+       -e container=docker \
+       --stop-signal SIGRTMIN+3 \
+       --device /dev/snd \
+       --device /dev/dri \
+       -ti --net=host \
+       --env="QT_X11_NO_MITSHM=1" \
+       --env="TZ=EST5EDT" \
+       --ipc=host \
+       --ulimit memlock=400000000 \
+       --ulimit rtprio=90 \
+       --mount source=vncs_home,target=/root \
+       --volume=/var/run/docker.sock:/var/run/docker.sock:rw \
+       --volume=/etc/timezone:/etc/timezone:ro \
+       vnc-fbtouch "$@"
+

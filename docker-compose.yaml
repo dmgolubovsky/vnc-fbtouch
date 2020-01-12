@@ -1,0 +1,36 @@
+version: "3.7"
+
+services:
+        vnc-server:
+                build: .
+                tmpfs:
+                        - /tmp
+                        - /run
+                        - /run/lock
+                volumes:
+                        - /sys/fs/cgroup:/sys/fs/cgroup:ro
+                        - /var/run/docker.sock:/var/run/docker.sock:rw
+                        - /etc/timezone:/etc/timezone:ro
+                        - vncs_home:/root:rw
+                environment:
+                        - container=docker
+                        - QT_X11_NO_MITSHM=1
+                        - TZ=EST5EDT
+                hostname: vnc-fbtouch
+                container_name: vnc-fbtouch
+                ipc: host
+                network_mode: host
+                stop_signal: SIGRTMIN+3
+                ulimits:
+                        memlock: 400000000
+                        rtprio: 90
+                devices:
+                        - /dev/snd
+                        - /dev/dri
+                tty: true
+                command: /sbin/init
+volumes:
+        vncs_home:
+
+
+

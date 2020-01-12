@@ -9,6 +9,8 @@ docker run --rm \
 	-e "TZ=$TZ" \
 	--device /dev/snd \
 	--device /dev/dri \
+        --ulimit memlock=400000000 \
+        --ulimit rtprio=90 \
 	--mount source=vncs_home,target=/root \
 	--volume=/etc/timezone:/etc/timezone:ro \
 	"$@"

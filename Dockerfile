@@ -24,7 +24,7 @@ run apt-fast install -y xterm less
 run apt-fast install -y x11-apps
 run apt-fast install -y mesa-utils
 
-run env DEBIAN_FRONTEND=noninteractive apt-fast install -y xinit alsa-utils locales
+run env DEBIAN_FRONTEND=noninteractive apt-fast install -y xinit alsa-utils locales libturbojpeg0-dev
 run env DEBIAN_FRONTEND=noninteractive apt-fast install -y fluxbox
 
 # Install docker client only
@@ -36,6 +36,11 @@ run env DEBIAN_FRONTEND=noninteractive apt-fast install -y curl
 
 run curl -fsSL $docker_url/docker-$docker_version.tgz | \
     tar zxvf - --strip 1 -C /usr/bin docker/docker
+
+
+copy --from=vnc-fbtouch_build-turbovnc /build-tvnc/turbovnc/turbovnc_2.2.3_amd64.deb /tmp
+
+run dpkg -i /tmp/turbovnc_2.2.3_amd64.deb
 
 add xvnc@.service /lib/systemd/system
 add xvnc@.socket /lib/systemd/system

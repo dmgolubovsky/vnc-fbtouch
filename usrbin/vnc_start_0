@@ -2,6 +2,6 @@
 
 # Start Tiger VNC server, display number in $1
 
-/usr/bin/xinit /usr/bin/startfluxbox -- /usr/bin/Xvnc :$1 -depth 24 -inetd -once securitytypes=none -geometry 1280x800
+/usr/bin/xinit /usr/bin/startfluxbox -- /usr/bin/Xvnc :$1 -depth 24 -inetd -once -securitytypes=none -geometry 1280x800
 
 

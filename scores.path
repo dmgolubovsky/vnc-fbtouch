@@ -1,0 +1,10 @@
+# Monitor the /root/Scores directory for changes and fire up a script for any change
+
+[Path]
+MakeDirectory = true
+PathChanged = /root/Scores
+Unit = scores.service
+
+[Install]
+WantedBy=default.target
+

@@ -25,7 +25,16 @@ run apt-fast install -y x11-apps
 run apt-fast install -y mesa-utils
 
 run env DEBIAN_FRONTEND=noninteractive apt-fast install -y xinit alsa-utils locales libturbojpeg0-dev
-run env DEBIAN_FRONTEND=noninteractive apt-fast install -y fluxbox
+run env DEBIAN_FRONTEND=noninteractive apt-fast install -y xfce4 dbus-x11 --no-install-recommends
+run env DEBIAN_FRONTEND=noninteractive apt-fast install -y adwaita-icon-theme-full xfce4-terminal wget
+
+run env DEBIAN_FRONTEND=noninteractive apt-fast install -y apt-transport-https gpgv 
+run wget https://launchpad.net/~kxstudio-debian/+archive/kxstudio/+files/kxstudio-repos_10.0.3_all.deb
+run dpkg -i kxstudio-repos_10.0.3_all.deb
+
+run apt-fast -y update
+
+run env DEBIAN_FRONTEND=noninteractive apt-fast install -y cadence zynaddsubfx carla musescore
 
 # Install docker client only
 
@@ -38,17 +47,20 @@ run curl -fsSL $docker_url/docker-$docker_version.tgz | \
     tar zxvf - --strip 1 -C /usr/bin docker/docker
 
 
-copy --from=vnc-fbtouch_build-turbovnc /build-tvnc/turbovnc/turbovnc_2.2.3_amd64.deb /tmp
-
-run dpkg -i /tmp/turbovnc_2.2.3_amd64.deb
-
 add xvnc@.service /lib/systemd/system
 add xvnc@.socket /lib/systemd/system
+add scores.path /lib/systemd/system
+add scores.service /lib/systemd/system
 add fbcfg /fbcfg
 add fbstyle /fbstyle
 add usrbin /usr/bin
 run systemctl enable xvnc@0.socket
+#run systemctl enable scores.path
 run locale-gen en_US.UTF-8
+
+copy --from=vnc-fbtouch_evs /espvs /espvs
+
+run apt-fast -y install libnotify-bin notify-osd vim zenity libsonic0 sox strace
 
 ## Finally clean up
 
@@ -64,4 +76,6 @@ run rm -rf /tmp/*
 
 from scratch
 copy --from=vncsvr / / 
+
+env PATH=/bin:/usr/bin:/usr/local/bin:/espvs/bin
 

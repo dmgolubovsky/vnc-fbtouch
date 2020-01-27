@@ -1,0 +1,6 @@
+# Fire up this unit whenever the /root/Scores directory changes (new score added or existing modified)
+
+[Service]
+Type = simple
+ExecStart = /usr/bin/score2xml
+

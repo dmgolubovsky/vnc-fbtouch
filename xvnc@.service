@@ -12,7 +12,6 @@ User=root
 ExecStartPre=/bin/rm -rf /root/.fluxbox
 ExecStartPre=/bin/mkdir -p /root/.fluxbox
 ExecStartPre=/bin/bash -c 'cp /fbcfg/* /root/.fluxbox'
-#ExecStart=/usr/bin/xinit /usr/bin/startfluxbox -- /usr/bin/Xvnc :%i -depth 24 -inetd -once securitytypes=none -geometry 1280x800
 ExecStart=/usr/bin/vnc_start_%i %i
 StandardInput=socket
 StandardOutput=journal

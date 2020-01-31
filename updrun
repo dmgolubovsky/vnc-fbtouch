@@ -1,3 +1,4 @@
 #! /bin/bash
 
 cat usrbin/score2xml | docker exec -i vnc-fbtouch tee /usr/bin/score2xml
+cat usrbin/urlrhymer | docker exec -i vnc-fbtouch tee /usr/bin/urlrhymer

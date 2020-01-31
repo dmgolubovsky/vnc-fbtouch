@@ -60,7 +60,7 @@ run locale-gen en_US.UTF-8
 
 copy --from=vnc-fbtouch_evs /espvs /espvs
 
-run apt-fast -y install libnotify-bin notify-osd vim zenity libsonic0 sox strace
+run apt-fast -y install libnotify-bin notify-osd vim zenity libsonic0 sox strace html2text
 
 ## Finally clean up
 

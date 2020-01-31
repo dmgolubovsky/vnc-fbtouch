@@ -1,0 +1,16 @@
+#! /bin/bash
+
+[ -z $2 ] && {
+	echo "Usage: $0 URL pattern prhymer-args"
+	exit
+}
+
+url="$1"
+
+shift
+
+export PATH=/espvs/bin:$PATH
+export LANG=en_US.UTF-8
+
+wget -O - $url 2>/dev/null | html2text -utf8 | tr '_' ' ' | /espvs/bin/prhymer /dev/stdin "$@"
+

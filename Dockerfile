@@ -34,7 +34,12 @@ run dpkg -i kxstudio-repos_10.0.3_all.deb
 
 run apt-fast -y update
 
-run env DEBIAN_FRONTEND=noninteractive apt-fast install -y cadence zynaddsubfx carla musescore
+run env DEBIAN_FRONTEND=noninteractive apt-fast install -y cadence zynaddsubfx carla \
+        hydrogen hydrogen-data hydrogen-drumkits
+
+run add-apt-repository ppa:mscore-ubuntu/mscore3-stable
+run apt-fast -y update
+run apt-fast -y install musescore3
 
 # Install docker client only
 
@@ -47,6 +52,12 @@ run curl -fsSL $docker_url/docker-$docker_version.tgz | \
     tar zxvf - --strip 1 -C /usr/bin docker/docker
 
 
+run locale-gen en_US.UTF-8
+
+copy --from=vnc-fbtouch_evs /espvs /espvs
+
+run apt-fast -y install libnotify-bin notify-osd vim zenity libsonic0 sox strace html2text net-tools
+
 add xvnc@.service /lib/systemd/system
 add xvnc@.socket /lib/systemd/system
 add scores.path /lib/systemd/system
@@ -55,13 +66,8 @@ add fbcfg /fbcfg
 add fbstyle /fbstyle
 add usrbin /usr/bin
 run systemctl enable xvnc@0.socket
-#run systemctl enable scores.path
-run locale-gen en_US.UTF-8
-
-copy --from=vnc-fbtouch_evs /espvs /espvs
-
-run apt-fast -y install libnotify-bin notify-osd vim zenity libsonic0 sox strace html2text
-
+run systemctl enable xvnc@1.socket
+#run systemctl disable avahi-daemon.service
 ## Finally clean up
 
 run apt-fast clean

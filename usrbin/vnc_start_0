@@ -4,6 +4,8 @@
 
 unset SESSION_MANAGER
 unset DBUS_SESSION_BUS_ADDRESS
-/usr/bin/xinit /usr/bin/dbus-launch /usr/bin/startxfce4 -- /usr/bin/Xvnc :$1 -depth 24 -inetd -once -securitytypes=none -geometry 1280x800
+set >&2
+/usr/bin/xinit /usr/bin/dbus-launch /usr/bin/startxfce4 -- /usr/bin/Xvnc :$1 -verbose -depth 24 -inetd -once -securitytypes=none -geometry 1280x800
+
 
 

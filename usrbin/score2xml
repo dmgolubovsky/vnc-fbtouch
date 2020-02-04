@@ -74,7 +74,7 @@ function process_mxml
 	destdir="$xmldir/`basename $1 .$xmlext`_proc"
 	$lyrvoc -L "$1" | (
 		while read part ; do
-			echo "Processing "$1" part $part"
+			echo "Processing $1 part $part"
 			mkdir -p "$destdir" || msg_exit "$destdir"
 			voice=$destdir/`tr 'A-Z' 'a-z' <<< "$part.voice"`
 			argfile=$destdir/$part.lyrvoc.args
@@ -85,7 +85,7 @@ function process_mxml
 	for a in $destdir/*.args ; do
 	(
 		echo "Running $a"
-		runid="`basename $a .args`"
+		runid="`basename "$a" .args`"
 		msgfile=$destdir/$runid.message
 		cd $destdir
 		sh "$a" 2>"$msgfile"

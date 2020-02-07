@@ -49,7 +49,7 @@ function mk_new_voice
 
 function mk_lyrvoc_arg_file
 {
-	pitch=`grep '^pitch' $2 | cut -d" " -f 2`
+	pitch=`grep '^pitch' "$2" | cut -d" " -f 2`
 	[ x"$pitch" = "x0" ] && return 0
 	(
 		echo "$lyrvoc \\"
@@ -98,7 +98,8 @@ for score in $scoredir/*.mscz ; do
 	scrf="`basename $score .mscz`"
 	xmlf=$xmldir/$scrf.$xmlext
 	if [ ! -e "$xmlf" ] || [ "$score" -nt "$xmlf" ] ; then
-		( musescore -f "$score" -o "$xmlf" && process_mxml "$xmlf" ) || 
+		( musescore3 -f "$score" -o "$xmlf" && process_mxml "$xmlf" ) || 
 			( msg_exit "Musescore conversion failed" )
+		notify-send -u low "$scrf" "Processed"
 	fi
 done

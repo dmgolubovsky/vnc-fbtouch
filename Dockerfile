@@ -67,7 +67,7 @@ add fbstyle /fbstyle
 add usrbin /usr/bin
 run systemctl enable xvnc@0.socket
 run systemctl enable xvnc@1.socket
-#run systemctl disable avahi-daemon.service
+run systemctl disable avahi-daemon.service
 ## Finally clean up
 
 run apt-fast clean

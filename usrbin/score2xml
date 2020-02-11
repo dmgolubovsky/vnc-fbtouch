@@ -98,6 +98,7 @@ for score in $scoredir/*.mscz ; do
 	scrf="`basename $score .mscz`"
 	xmlf=$xmldir/$scrf.$xmlext
 	if [ ! -e "$xmlf" ] || [ "$score" -nt "$xmlf" ] ; then
+		notify-send -u low "$scrf" "Started"
 		( musescore3 -f "$score" -o "$xmlf" && process_mxml "$xmlf" ) || 
 			( msg_exit "Musescore conversion failed" )
 		notify-send -u low "$scrf" "Processed"

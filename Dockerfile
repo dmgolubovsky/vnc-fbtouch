@@ -56,7 +56,7 @@ run locale-gen en_US.UTF-8
 
 copy --from=vnc-fbtouch_evs /espvs /espvs
 
-run apt-fast -y install libnotify-bin notify-osd vim zenity libsonic0 sox strace html2text net-tools
+run apt-fast -y install libnotify-bin notify-osd vim zenity libsonic0 sox strace html2text net-tools geany
 
 add xvnc@.service /lib/systemd/system
 add xvnc@.socket /lib/systemd/system
@@ -68,6 +68,7 @@ add usrbin /usr/bin
 run systemctl enable xvnc@0.socket
 run systemctl enable xvnc@1.socket
 run systemctl disable avahi-daemon.service
+run ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime
 ## Finally clean up
 
 run apt-fast clean

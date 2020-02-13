@@ -104,3 +104,5 @@ for score in $scoredir/*.mscz ; do
 		notify-send -u low "$scrf" "Processed"
 	fi
 done
+
+[ ! -z "$1" ] && sleep "$1" && exec "$0" "$1"

@@ -35,7 +35,7 @@ run dpkg -i kxstudio-repos_10.0.3_all.deb
 run apt-fast -y update
 
 run env DEBIAN_FRONTEND=noninteractive apt-fast install -y cadence zynaddsubfx carla \
-        hydrogen hydrogen-data hydrogen-drumkits
+        hydrogen hydrogen-data hydrogen-drumkits qtractor
 
 run add-apt-repository ppa:mscore-ubuntu/mscore3-stable
 run apt-fast -y update

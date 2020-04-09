@@ -35,7 +35,23 @@ run dpkg -i kxstudio-repos_10.0.3_all.deb
 run apt-fast -y update
 
 run env DEBIAN_FRONTEND=noninteractive apt-fast install -y cadence zynaddsubfx carla \
-        hydrogen hydrogen-data hydrogen-drumkits qtractor kxstudio-meta-audio-plugins-lv2
+        hydrogen hydrogen-data hydrogen-drumkits qtractor kxstudio-meta-audio-plugins-lv2 \
+        qmidiarp kxstudio-meta-all \
+        kxstudio-meta-audio-applications guitarix-lv2 avw.lv2 ir.lv2 lv2vocoder \
+        kxstudio-meta-audio-plugins kxstudio-meta-audio-plugins-collection \
+        vim alsa-utils zita-ajbridge zenity mda-lv2 padthv1-lv2 samplv1-lv2 \
+        so-synth-lv2 swh-lv2 synthv1-lv2 whysynth wsynth-dssi xsynth-dssi phasex \
+        iem-plugin-suite-vst hydrogen-drumkits hydrogen-data 
+
+workdir /tmp
+
+run wget https://musical-artifacts.com/artifacts/133/drumkits.tar.bz2
+
+workdir /usr/share/hydrogen/data
+
+run tar xjvf /tmp/drumkits.tar.bz2
+
+run rm  /tmp/drumkits.tar.bz2
 
 run add-apt-repository ppa:mscore-ubuntu/mscore3-stable
 run apt-fast -y update
@@ -56,7 +72,10 @@ run locale-gen en_US.UTF-8
 
 copy --from=vnc-fbtouch_evs /espvs /espvs
 
-run apt-fast -y install libnotify-bin notify-osd vim zenity libsonic0 sox strace html2text net-tools geany
+run apt-fast -y install libnotify-bin notify-osd vim zenity libsonic0 sox strace \
+                        html2text net-tools geany zip unzip
+
+workdir /
 
 add xvnc@.service /lib/systemd/system
 add xvnc@.socket /lib/systemd/system

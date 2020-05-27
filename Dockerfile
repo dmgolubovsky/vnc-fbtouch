@@ -109,8 +109,8 @@ run env DEBIAN_FRONTEND=noninteractive apt-fast install -y cadence zynaddsubfx c
         kxstudio-meta-audio-applications guitarix-lv2 avw.lv2 ir.lv2 lv2vocoder \
         kxstudio-meta-audio-plugins kxstudio-meta-audio-plugins-collection \
         vim alsa-utils zita-ajbridge zenity mda-lv2 padthv1-lv2 samplv1-lv2 \
-        so-synth-lv2 swh-lv2 synthv1-lv2 whysynth wsynth-dssi xsynth-dssi phasex \
-        iem-plugin-suite-vst hydrogen-drumkits hydrogen-data guitarix-common
+        so-synth-lv2 swh-lv2 synthv1-lv2 whysynth wsynth-dssi xsynth-dssi phasex audacity \
+        iem-plugin-suite-vst hydrogen-drumkits hydrogen-data guitarix-common milkytracker
 
 workdir /tmp
 
@@ -169,8 +169,37 @@ run rm -rf /var/lib/cache
 run rm -rf /var/lib/log
 run rm -rf /tmp/*
 
+from base-ubuntu as tutka
+
+workdir /tmp
+
+run apt-fast install -y wget xz-utils qt5-qmake qt5-default g++ make
+
+run wget http://download.savannah.gnu.org/releases/tutka/tutka-1.1.3.tar.xz
+
+run tar xJvf tutka-1.1.3.tar.xz
+
+workdir tutka-1.1.3
+
+run qmake
+
+run apt-fast -y install qttools5-dev-tools libasound2-dev
+
+run make
+
+run make install
+
+from vncsvr as vncsvrt
+
+copy --from=tutka /usr/bin/tutka /usr/bin
+copy --from=tutka /usr/share/applications/tutka.desktop /usr/share/applications
+copy --from=tutka /usr/share/icons/hicolor/48x48/apps/tutka.png /usr/share/icons/hicolor/48x48/apps
+copy --from=tutka /usr/share/icons/hicolor/512x512/apps/tutka.png /usr/share/icons/hicolor/512x512/apps
+
+run ldd /usr/bin/tutka
+
 from scratch
-copy --from=vncsvr / / 
+copy --from=vncsvrt / / 
 
 env PATH=/bin:/usr/bin:/usr/local/bin:/espvs/bin
 
